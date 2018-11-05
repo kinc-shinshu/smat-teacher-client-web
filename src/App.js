@@ -11,9 +11,10 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={Top} />
-          <Route path="/edit" component={Edit} />
-          <Route path="/done" component={Done} />
-          <Route path="/list" component={List} />
+          <Route exact path="/exams/:id/edit" component={Edit} />
+          <Route exact path="/exams/new" component={Edit} />
+          <Route exact path="/exams" component={List} />
+          <Route exact path="/done" component={Done} />
         </div>
       </BrowserRouter>
     );
