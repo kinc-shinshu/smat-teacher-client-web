@@ -1,6 +1,6 @@
 # SmaT Teacher Client
 
-An API server of smaT for shinshu-futureapp contest. This API server is running on Ruby on Rails.
+A teacher client of smaT for shinshu-futureapp contest. This client is running on React.js.
 
 ## Requirements
 
