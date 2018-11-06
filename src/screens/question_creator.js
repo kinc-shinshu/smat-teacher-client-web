@@ -39,13 +39,15 @@ class Navbar extends Component {
   }
 }
 
-export class List extends Component {
+export class QuestionCreator extends Component {
   render() {
+    console.log(this.props);
     return (
       <div>
         <Navbar />
         <div className="container">
-          <h1>List.js</h1>
+          <h1>QuestionCreator</h1>
+          <p>{this.props.match.params.id}</p>
         </div>
       </div>
     );
