@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-import { Top } from "./screens/Top";
-import { Edit } from "./screens/Edit";
-import { Done } from "./screens/Done";
-import { List } from "./screens/List";
+import { Top } from "./screens/top";
+import { ExamList } from "./screens/exam_list";
+import { ExamCreator } from "./screens/exam_creator";
+import { QuestionList } from "./screens/question_list";
+import { QuestionCreator } from "./screens/question_creator";
+import { QuestionEditor } from "./screens/question_editor";
 
 class App extends Component {
   render() {
@@ -11,10 +13,11 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={Top} />
-          <Route exact path="/exams/:id/edit" component={Edit} />
-          <Route exact path="/exams/new" component={Edit} />
-          <Route exact path="/exams" component={List} />
-          <Route exact path="/done" component={Done} />
+          <Route exact path="/exams" component={ExamList} />
+          <Route exact path="/exams/new" component={ExamCreator} />
+          <Route exact path="/exams/:id" component={QuestionList} />
+          <Route exact path="/exams/:id/new" component={QuestionCreator} />
+          <Route exact path="/questions/:id/edit" component={QuestionEditor} />
         </div>
       </BrowserRouter>
     );
