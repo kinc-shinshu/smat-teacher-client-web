@@ -183,7 +183,8 @@ export class QuestionEditor extends Component {
     super(props);
     this.state = {
       text: "ax^{2}+bx+c=0",
-      answer: "[-b+-#{b^{2}-4ac}]%[2a]"
+      answer: "[-b+-#{b^{2}-4ac}]%[2a]",
+      examid: 0
     };
     this.getQuestion();
     this.updateText = this.updateText.bind(this);
@@ -204,8 +205,25 @@ export class QuestionEditor extends Component {
     const question = await fetch(URI + "/rooms/168/questions/" + qid).then(
       response => response.json()
     );
+    this.setState({
+      text: question.text,
+      answer: question.answer,
+      examid: question.room_id
+    });
+  };
+
+  updateQuestion = async () => {
+    const URI = "https://smat-api.herokuapp.com";
+    const qid = this.props.match.params.id;
+    const data = { text: this.state.text, answer: this.state.answer };
+    const question = await fetch(URI + "/rooms/168/questions/" + qid, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => response.json());
     console.log(question);
-    this.setState({ text: question.text, answer: question.answer });
   };
 
   render() {
@@ -221,6 +239,13 @@ export class QuestionEditor extends Component {
             <h4>解答</h4>
             <MathBox init={this.state.answer} updateState={this.updateAnswer} />
           </div>
+          <Link
+            to={"/exams/" + this.state.examid}
+            className="waves-effect waves-light btn-large"
+            onClick={this.updateQuestion}
+          >
+            完成
+          </Link>
         </div>
       </div>
     );
