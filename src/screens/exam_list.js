@@ -61,11 +61,7 @@ class ItemList extends Component {
   render() {
     const items = this.state.exams.map((e, i) => {
       return (
-        <Link
-          to={"/exams/" + e.id}
-          key={i}
-          className="collection-item"
-        >
+        <Link to={"/exams/" + e.id} key={i} className="collection-item">
           {e.title}
         </Link>
       );
