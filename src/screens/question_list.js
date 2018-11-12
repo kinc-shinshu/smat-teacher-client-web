@@ -52,9 +52,10 @@ class ItemList extends Component {
   }
 
   getQuestions = async () => {
-    const URI = "https://smat-api.herokuapp.com";
-    const questions = await fetch(URI + "/rooms/168/questions").then(response =>
-      response.json()
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const examid = this.props.examid;
+    const questions = await fetch(URI + "/exams/" + examid + "/questions").then(
+      response => response.json()
     );
     this.setState({ questions: questions, is_loading: false });
   };
@@ -94,7 +95,7 @@ export class QuestionList extends Component {
         <Navbar />
         <div className="container">
           <h2>問題一覧</h2>
-          <ItemList />
+          <ItemList examid={this.props.match.params.id} />
         </div>
       </div>
     );

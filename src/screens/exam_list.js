@@ -39,15 +39,54 @@ class Navbar extends Component {
   }
 }
 
+class ItemList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      exams: [],
+      is_loading: true
+    };
+    this.getExams();
+  }
+
+  getExams = async () => {
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const tid = this.props.tid;
+    const exams = await fetch(URI + "/teachers/" + tid + "/exams").then(
+      response => response.json()
+    );
+    this.setState({ exams: exams, is_loading: false });
+  };
+
+  render() {
+    const items = this.state.exams.map((e, i) => {
+      return (
+        <Link to={"/exams/" + e.id} key={i} className="collection-item">
+          {e.title}
+        </Link>
+      );
+    });
+    const preloader = (
+      <div className="progress">
+        <div className="indeterminate" />
+      </div>
+    );
+    if (this.state.is_loading) {
+      return preloader;
+    } else {
+      return <div className="collection left-align">{items}</div>;
+    }
+  }
+}
+
 export class ExamList extends Component {
   render() {
-    console.log(this.props);
     return (
       <div>
         <Navbar />
         <div className="container">
-          <h1>ExamList</h1>
-          <p>{this.props.match.params.id}</p>
+          <h2>試験一覧</h2>
+          <ItemList tid={1} />
         </div>
       </div>
     );
