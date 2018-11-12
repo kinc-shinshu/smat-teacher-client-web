@@ -184,7 +184,9 @@ export class QuestionEditor extends Component {
     this.state = {
       text: "ax^{2}+bx+c=0",
       answer: "[-b+-#{b^{2}-4ac}]%[2a]",
-      examid: 0
+      examid: 0,
+      question_type: "Math",
+      is_loading: true
     };
     this.getQuestion();
     this.updateText = this.updateText.bind(this);
@@ -200,23 +202,30 @@ export class QuestionEditor extends Component {
   }
 
   getQuestion = async () => {
-    const URI = "https://smat-api.herokuapp.com";
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
     const qid = this.props.match.params.id;
-    const question = await fetch(URI + "/rooms/168/questions/" + qid).then(
-      response => response.json()
+    const question = await fetch(URI + "/questions/" + qid).then(response =>
+      response.json()
     );
     this.setState({
       text: question.text,
       answer: question.answer,
-      examid: question.room_id
+      examid: question.exam_id,
+      question_type: question.question_type,
+      is_loading: false
     });
+    console.log(question);
   };
 
   updateQuestion = async () => {
-    const URI = "https://smat-api.herokuapp.com";
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
     const qid = this.props.match.params.id;
-    const data = { text: this.state.text, answer: this.state.answer };
-    const question = await fetch(URI + "/rooms/168/questions/" + qid, {
+    const data = {
+      text: this.state.text,
+      answer: this.state.answer,
+      question_type: this.state.question_type
+    };
+    const question = await fetch(URI + "/questions/" + qid, {
       method: "PATCH",
       body: JSON.stringify(data),
       headers: {
@@ -227,17 +236,31 @@ export class QuestionEditor extends Component {
   };
 
   render() {
+    const questionInput = (
+      <MathBox init={this.state.text} updateState={this.updateText} />
+    );
+    const answerInput = (
+      <MathBox init={this.state.answer} updateState={this.updateAnswer} />
+    );
+    const preloader = (
+      <div className="progress">
+        <div className="indeterminate" />
+      </div>
+    );
+    if (this.state.is_loading) {
+      return preloader;
+    }
     return (
       <div>
         <Navbar />
         <div className="container">
           <div className="card-panel grey lighten-4">
             <h4>問題</h4>
-            <MathBox init={this.state.text} updateState={this.updateText} />
+            {questionInput}
           </div>
           <div className="card-panel grey lighten-4">
             <h4>解答</h4>
-            <MathBox init={this.state.answer} updateState={this.updateAnswer} />
+            {answerInput}
           </div>
           <Link
             to={"/exams/" + this.state.examid}
