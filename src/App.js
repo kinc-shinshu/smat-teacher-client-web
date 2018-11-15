@@ -15,9 +15,13 @@ class App extends Component {
           <Route exact path="/" component={Top} />
           <Route exact path="/exams" component={ExamList} />
           <Route exact path="/exams/new" component={ExamCreator} />
-          <Route exact path="/exams/:id" component={QuestionList} />
+          <Route exact path="/exams/:id(\d+)" component={QuestionList} />
           <Route exact path="/exams/:id/new" component={QuestionCreator} />
-          <Route exact path="/questions/:id/edit" component={QuestionEditor} />
+          <Route
+            exact
+            path="/questions/:id(\d+)/edit"
+            component={QuestionEditor}
+          />
         </div>
       </BrowserRouter>
     );
