@@ -3,6 +3,7 @@ import { MathBox, parse } from "../helper";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 class Navbar extends Component {
   render() {
@@ -79,6 +80,7 @@ export class QuestionCreator extends Component {
       }
     }).then(response => response.json());
     console.log(question);
+    this.props.history.push("/exams/" + this.state.examid);
   };
 
   render() {
@@ -100,15 +102,16 @@ export class QuestionCreator extends Component {
             <h4>解答</h4>
             {answerInput}
           </div>
-          <Link
-            to={"/exams/" + this.state.examid}
+          <a
             className="waves-effect waves-light btn-large"
             onClick={this.createQuestion}
           >
             完成
-          </Link>
+          </a>
         </div>
       </div>
     );
   }
 }
+
+export default withRouter(QuestionCreator);
