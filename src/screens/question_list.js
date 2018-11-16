@@ -70,7 +70,7 @@ class ItemList extends Component {
           style={{ minHeight: "5em" }}
         >
           <MathJax.Provider>
-            <MathJax.Node formula={parse(q.text)} className="left" />
+            <MathJax.Node formula={parse(q.smatex)} className="left" />
           </MathJax.Provider>
         </Link>
       );
