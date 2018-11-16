@@ -14,7 +14,7 @@ class Navbar extends Component {
             </Link>
             <ul className="right hide-on-med-and-down">
               <li>
-                <Link to="exams">試験一覧</Link>
+                <Link to="/exams">試験一覧</Link>
               </li>
             </ul>
           </div>

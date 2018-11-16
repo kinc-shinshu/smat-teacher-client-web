@@ -10,12 +10,12 @@ class Navbar extends Component {
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper container">
-            <a href="#!" className="brand-logo">
+            <Link to="/" className="brand-logo">
               Smart Teach
-            </a>
+            </Link>
             <ul className="right hide-on-med-and-down">
               <li>
-                <Link to="edit">新しい問題を追加</Link>
+                <Link to={"/exams/" + this.props.examid}>問題一覧</Link>
               </li>
               <li>
                 <label className="white-text" style={{ fontSize: "1em" }}>
@@ -28,9 +28,6 @@ class Navbar extends Component {
                     />
                   </a>
                 </label>
-              </li>
-              <li>
-                <Link to="done">完成</Link>
               </li>
             </ul>
           </div>
@@ -93,7 +90,7 @@ export class QuestionCreator extends Component {
     );
     return (
       <div>
-        <Navbar />
+        <Navbar examid={this.props.match.params.id} />
         <div className="container">
           <div className="card-panel grey lighten-4">
             <h4>問題</h4>

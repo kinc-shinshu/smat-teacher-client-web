@@ -14,7 +14,10 @@ class Navbar extends Component {
             </Link>
             <ul className="right hide-on-med-and-down">
               <li>
-                <Link to="exams/new">新しい試験を作成</Link>
+                <Link to="/">トップページ</Link>
+              </li>
+              <li>
+                <Link to="/exams/new">新しい試験を作成</Link>
               </li>
               <li>
                 <label className="white-text" style={{ fontSize: "1em" }}>
