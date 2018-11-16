@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MathBox } from "../helper";
+import { MathBox, parse } from "../helper";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
@@ -44,7 +44,8 @@ export class QuestionEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "ax^{2}+bx+c=0",
+      latex: "ax^{2}+bx+c=0",
+      smatex: "ax^{2}+bx+c=0",
       answer: "[-b+-#{b^{2}-4ac}]%[2a]",
       examid: 0,
       question_type: "Math",
@@ -56,7 +57,8 @@ export class QuestionEditor extends Component {
   }
 
   updateText(text) {
-    this.setState({ text: text });
+    this.setState({ smatex: text });
+    this.setState({ latex: parse(text) });
   }
 
   updateAnswer(answer) {
@@ -70,7 +72,8 @@ export class QuestionEditor extends Component {
       response.json()
     );
     this.setState({
-      text: question.text,
+      smatex: question.smatex,
+      latex: question.latex,
       answer: question.answer,
       examid: question.exam_id,
       question_type: question.question_type,
@@ -82,7 +85,8 @@ export class QuestionEditor extends Component {
     const URI = "https://smat-api-dev.herokuapp.com/v1";
     const qid = this.props.match.params.id;
     const data = {
-      text: this.state.text,
+      smatex: this.state.smatex,
+      latex: this.state.latex,
       answer: this.state.answer,
       question_type: this.state.question_type
     };
@@ -98,7 +102,7 @@ export class QuestionEditor extends Component {
 
   render() {
     const questionInput = (
-      <MathBox init={this.state.text} updateState={this.updateText} />
+      <MathBox init={this.state.smatex} updateState={this.updateText} />
     );
     const answerInput = (
       <MathBox init={this.state.answer} updateState={this.updateAnswer} />

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MathBox } from "../helper";
+import { MathBox, parse } from "../helper";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
@@ -44,7 +44,8 @@ export class QuestionCreator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "ax^{2}+bx+c=0",
+      smatex: "ax^{2}+bx+c=0",
+      latex: "ax^{2}+bx+c=0",
       answer: "[-b+-#{b^{2}-4ac}]%[2a]",
       examid: this.props.match.params.id,
       question_type: "Math",
@@ -55,18 +56,20 @@ export class QuestionCreator extends Component {
   }
 
   updateText(text) {
-    this.setState({ text: text });
+    this.setState({ smatex: text });
+    this.setState({ latex: parse(text) });
   }
 
   updateAnswer(answer) {
     this.setState({ answer: answer });
   }
 
-  updateQuestion = async () => {
+  createQuestion = async () => {
     const URI = "https://smat-api-dev.herokuapp.com/v1";
     const examid = this.props.match.params.id;
     const data = {
-      text: this.state.text,
+      smatex: this.state.smatex,
+      latex: this.state.latex,
       answer: this.state.answer,
       examid: this.state.examid,
       question_type: this.state.question_type
@@ -83,7 +86,7 @@ export class QuestionCreator extends Component {
 
   render() {
     const questionInput = (
-      <MathBox init={this.state.text} updateState={this.updateText} />
+      <MathBox init={this.state.smatex} updateState={this.updateText} />
     );
     const answerInput = (
       <MathBox init={this.state.answer} updateState={this.updateAnswer} />
@@ -103,7 +106,7 @@ export class QuestionCreator extends Component {
           <Link
             to={"/exams/" + this.state.examid}
             className="waves-effect waves-light btn-large"
-            onClick={this.updateQuestion}
+            onClick={this.createQuestion}
           >
             完成
           </Link>
