@@ -65,11 +65,11 @@ export class MathBox extends Component {
   };
 
   frac = () => {
-    this.add("[?]%[?]", [1, 2]);
+    this.add("[?]%[?]", [5, 6]);
   };
 
   index = () => {
-    this.add("?^{?}", [3, 4]);
+    this.add("?^{?}", [0, 1]);
   };
 
   times = () => {
