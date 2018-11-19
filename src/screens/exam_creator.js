@@ -36,15 +36,77 @@ class Navbar extends Component {
   }
 }
 
+export class CreateForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "",
+      description: "",
+      open: false
+    };
+  }
+
+  changeTitle = e => {
+    this.setState({ title: e.target.value });
+  };
+
+  changeDescription = e => {
+    this.setState({ description: e.target.value });
+  };
+
+  changeToggle = e => {
+    this.setState({ open: e.target.checked });
+  };
+
+  render() {
+    return (
+      <div className="row">
+        <div className="input-field col s12">
+          <input
+            id="title"
+            type="text"
+            value={this.state.title}
+            onChange={this.changeTitle}
+          />
+          <label for="title">タイトル</label>
+        </div>
+        <div className="input-field col s12">
+          <input
+            id="description"
+            type="text"
+            value={this.state.description}
+            onChange={this.changeDescription}
+          />
+          <label for="description">説明（任意）</label>
+        </div>
+        <div className="input-field col s12">
+          <div className="switch">
+            <label>
+              非公開
+              <input
+                type="checkbox"
+                checked={this.state.open}
+                onChange={this.changeToggle}
+              />
+              <span className="lever" />
+              公開
+            </label>
+          </div>
+        </div>
+        <a className="waves-effect waves-light btn btn-large">作成</a>
+      </div>
+    );
+  }
+}
+
 export class ExamCreator extends Component {
   render() {
-    console.log(this.props);
     return (
       <div>
         <Navbar />
         <div className="container">
-          <h1>試験作成画面</h1>
-          <p>{this.props.match.params.id}</p>
+          <h1>新規試験作成</h1>
+          <CreateForm />
         </div>
       </div>
     );
