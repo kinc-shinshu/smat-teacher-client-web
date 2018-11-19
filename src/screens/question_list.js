@@ -11,12 +11,17 @@ class Navbar extends Component {
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper container">
-            <a href="#!" className="brand-logo">
+            <Link to="/" className="brand-logo">
               Smart Teach
-            </a>
+            </Link>
             <ul className="right hide-on-med-and-down">
               <li>
-                <Link to="edit">新しい問題を追加</Link>
+                <Link to="/exams">試験一覧</Link>
+              </li>
+              <li>
+                <Link to={"/exams/" + this.props.examid + "/new"}>
+                  新しい問題を追加
+                </Link>
               </li>
               <li>
                 <label className="white-text" style={{ fontSize: "1em" }}>
@@ -29,9 +34,6 @@ class Navbar extends Component {
                     />
                   </a>
                 </label>
-              </li>
-              <li>
-                <Link to="done">完成</Link>
               </li>
             </ul>
           </div>
@@ -70,7 +72,7 @@ class ItemList extends Component {
           style={{ minHeight: "5em" }}
         >
           <MathJax.Provider>
-            <MathJax.Node formula={parse(q.text)} className="left" />
+            <MathJax.Node formula={parse(q.smatex)} className="left" />
           </MathJax.Provider>
         </Link>
       );
@@ -92,7 +94,7 @@ export class QuestionList extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar examid={this.props.match.params.id} />
         <div className="container">
           <h2>問題一覧</h2>
           <ItemList examid={this.props.match.params.id} />

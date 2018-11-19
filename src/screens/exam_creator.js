@@ -9,17 +9,17 @@ class Navbar extends Component {
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper container">
-            <a href="#!" className="brand-logo">
+            <Link to="/" className="brand-logo">
               Smart Teach
-            </a>
+            </Link>
             <ul className="right hide-on-med-and-down">
               <li>
-                <Link to="edit">新しい問題を追加</Link>
+                <Link to="/exams">試験一覧</Link>
               </li>
               <li>
                 <label className="white-text" style={{ fontSize: "1em" }}>
                   <a>
-                    作成した問題をロード
+                    作成した試験をロード
                     <input
                       type="file"
                       style={{ display: "None" }}
@@ -27,9 +27,6 @@ class Navbar extends Component {
                     />
                   </a>
                 </label>
-              </li>
-              <li>
-                <Link to="done">完成</Link>
               </li>
             </ul>
           </div>
@@ -46,7 +43,7 @@ export class ExamCreator extends Component {
       <div>
         <Navbar />
         <div className="container">
-          <h1>ExamCreator</h1>
+          <h1>試験作成画面</h1>
           <p>{this.props.match.params.id}</p>
         </div>
       </div>

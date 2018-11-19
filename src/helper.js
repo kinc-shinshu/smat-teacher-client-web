@@ -80,6 +80,22 @@ export class MathBox extends Component {
     this.add("/");
   };
 
+  keydown = e => {
+    const key = e.keyCode;
+    if (key === 103) {
+      this.sqrt();
+      e.preventDefault();
+    }
+    if (key === 104) {
+      this.frac();
+      e.preventDefault();
+    }
+    if (key === 105) {
+      this.index();
+      e.preventDefault();
+    }
+  };
+
   change = e => {
     const input = e.target.value;
     const result = parse(input);
@@ -157,6 +173,7 @@ export class MathBox extends Component {
             ref={this.inputForm}
             type="text"
             style={{ fontSize: "2em" }}
+            onKeyDown={this.keydown}
             onChange={this.change}
             value={this.state.input}
           />

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { MathBox } from "../helper";
+import { MathBox, parse } from "../helper";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 class Navbar extends Component {
   render() {
@@ -10,12 +11,12 @@ class Navbar extends Component {
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper container">
-            <a href="#!" className="brand-logo">
+            <Link to="/" className="brand-logo">
               Smart Teach
-            </a>
+            </Link>
             <ul className="right hide-on-med-and-down">
               <li>
-                <Link to="edit">新しい問題を追加</Link>
+                <Link to={"/exams/" + this.props.examid}>問題一覧</Link>
               </li>
               <li>
                 <label className="white-text" style={{ fontSize: "1em" }}>
@@ -29,9 +30,6 @@ class Navbar extends Component {
                   </a>
                 </label>
               </li>
-              <li>
-                <Link to="done">完成</Link>
-              </li>
             </ul>
           </div>
         </nav>
@@ -44,7 +42,8 @@ export class QuestionEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "ax^{2}+bx+c=0",
+      latex: "ax^{2}+bx+c=0",
+      smatex: "ax^{2}+bx+c=0",
       answer: "[-b+-#{b^{2}-4ac}]%[2a]",
       examid: 0,
       question_type: "Math",
@@ -56,7 +55,8 @@ export class QuestionEditor extends Component {
   }
 
   updateText(text) {
-    this.setState({ text: text });
+    this.setState({ smatex: text });
+    this.setState({ latex: parse(text) });
   }
 
   updateAnswer(answer) {
@@ -70,7 +70,8 @@ export class QuestionEditor extends Component {
       response.json()
     );
     this.setState({
-      text: question.text,
+      smatex: question.smatex,
+      latex: question.latex,
       answer: question.answer,
       examid: question.exam_id,
       question_type: question.question_type,
@@ -82,7 +83,8 @@ export class QuestionEditor extends Component {
     const URI = "https://smat-api-dev.herokuapp.com/v1";
     const qid = this.props.match.params.id;
     const data = {
-      text: this.state.text,
+      smatex: this.state.smatex,
+      latex: this.state.latex,
       answer: this.state.answer,
       question_type: this.state.question_type
     };
@@ -94,11 +96,12 @@ export class QuestionEditor extends Component {
       }
     }).then(response => response.json());
     console.log(question);
+    this.props.history.push("/exams/" + this.state.examid);
   };
 
   render() {
     const questionInput = (
-      <MathBox init={this.state.text} updateState={this.updateText} />
+      <MathBox init={this.state.smatex} updateState={this.updateText} />
     );
     const answerInput = (
       <MathBox init={this.state.answer} updateState={this.updateAnswer} />
@@ -113,7 +116,7 @@ export class QuestionEditor extends Component {
     }
     return (
       <div>
-        <Navbar />
+        <Navbar examid={this.state.examid} />
         <div className="container">
           <div className="card-panel grey lighten-4">
             <h4>問題</h4>
@@ -123,15 +126,16 @@ export class QuestionEditor extends Component {
             <h4>解答</h4>
             {answerInput}
           </div>
-          <Link
-            to={"/exams/" + this.state.examid}
+          <a
             className="waves-effect waves-light btn-large"
             onClick={this.updateQuestion}
           >
             完成
-          </Link>
+          </a>
         </div>
       </div>
     );
   }
 }
+
+export default withRouter(QuestionEditor);

@@ -9,27 +9,12 @@ class Navbar extends Component {
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper container">
-            <a href="#!" className="brand-logo">
+            <Link to="/" className="brand-logo">
               Smart Teach
-            </a>
+            </Link>
             <ul className="right hide-on-med-and-down">
               <li>
-                <Link to="edit">新しい問題を追加</Link>
-              </li>
-              <li>
-                <label className="white-text" style={{ fontSize: "1em" }}>
-                  <a>
-                    作成した問題をロード
-                    <input
-                      type="file"
-                      style={{ display: "None" }}
-                      onChange={this.change}
-                    />
-                  </a>
-                </label>
-              </li>
-              <li>
-                <Link to="done">完成</Link>
+                <Link to="/exams">試験一覧</Link>
               </li>
             </ul>
           </div>
@@ -45,7 +30,7 @@ export class Top extends Component {
       <div>
         <Navbar />
         <div className="container">
-          <h1>Top</h1>
+          <h1>トップページ</h1>
         </div>
       </div>
     );
