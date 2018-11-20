@@ -41,7 +41,7 @@ export class MathBox extends Component {
     this.inputForm = createRef();
   }
 
-  add = text => {
+  add = (text, range) => {
     const input = this.inputForm.current;
     const cursor = input.selectionStart;
     const before = this.state.input.slice(0, cursor);
@@ -55,29 +55,29 @@ export class MathBox extends Component {
       },
       () => {
         input.focus();
-        input.setSelectionRange(cursor, cursor + text.length);
+        input.setSelectionRange(cursor + range[0], cursor + range[1]);
       }
     );
   };
 
   sqrt = () => {
-    this.add("#{?}");
+    this.add("#{?}", [2, 3]);
   };
 
   frac = () => {
-    this.add("[?]%[?]");
+    this.add("[?]%[?]", [5, 6]);
   };
 
   index = () => {
-    this.add("?^{?}");
+    this.add("?^{?}", [0, 1]);
   };
 
   times = () => {
-    this.add("*");
+    this.add("*", [1, 1]);
   };
 
   div = () => {
-    this.add("/");
+    this.add("/", [1, 1]);
   };
 
   keydown = e => {
