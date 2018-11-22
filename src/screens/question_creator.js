@@ -60,8 +60,8 @@ export class QuestionCreator extends Component {
   }
 
   updateAnswer(answer) {
-    this.setState({ answer: answer });
-    this.setState({ latex: parse(answer) });
+    this.setState({ ans_smatex: answer });
+    this.setState({ ans_latex: parse(answer) });
   }
 
   createQuestion = async () => {
