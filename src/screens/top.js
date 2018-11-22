@@ -29,8 +29,11 @@ export class Top extends Component {
     return (
       <div>
         <Navbar />
-        <div className="container">
-          <h1>トップページ</h1>
+        <div className="container center-align">
+          <h1>さあ試験をはめよう</h1>
+          <Link className="waves-effect waves-light btn-large" to="/exams">
+            試験一覧
+          </Link>
         </div>
       </div>
     );
