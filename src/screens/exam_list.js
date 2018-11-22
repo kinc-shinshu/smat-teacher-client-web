@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
+import { Breadcrumb } from "../helper";
 
 class Navbar extends Component {
   render() {
@@ -81,11 +82,15 @@ class ItemList extends Component {
 
 export class ExamList extends Component {
   render() {
+    const links = [
+      { path: "/", text: "トップ" },
+      { path: "/exams", text: "試験一覧" }
+    ];
     return (
       <div>
         <Navbar />
         <div className="container">
-          <h2>試験一覧</h2>
+          <Breadcrumb links={links} />
           <ItemList tid={1} />
         </div>
         <div class="fixed-action-btn">
