@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { parse } from "../helper";
+import { parse, Breadcrumb } from "../helper";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import MathJax from "react-mathjax";
@@ -38,34 +38,6 @@ class Navbar extends Component {
             </ul>
           </div>
         </nav>
-      </div>
-    );
-  }
-}
-
-class Detail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      detail: []
-    };
-    this.getDetail();
-  }
-
-  getDetail = async () => {
-    const URI = "https://smat-api-dev.herokuapp.com/v1";
-    const examid = this.props.examid;
-    const detail = await fetch(URI + "/exams/" + examid).then(response =>
-      response.json()
-    );
-    this.setState({ detail: detail });
-  };
-
-  render() {
-    return (
-      <div>
-        <h2>{this.state.detail.title}</h2>
-        <p>{this.state.detail.description}</p>
       </div>
     );
   }
@@ -119,12 +91,36 @@ class ItemList extends Component {
 }
 
 export class QuestionList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      detail: []
+    };
+    this.getDetail();
+  }
+
+  getDetail = async () => {
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const examid = this.props.match.params.id;
+    const detail = await fetch(URI + "/exams/" + examid).then(response =>
+      response.json()
+    );
+    this.setState({ detail: detail });
+  };
+
   render() {
+    const examid = this.props.match.params.id;
+    const links = [
+      { path: "/", text: "トップ" },
+      { path: "/exams", text: "試験一覧" },
+      { path: "/exams/" + examid, text: this.state.detail.title }
+    ];
     return (
       <div>
         <Navbar examid={this.props.match.params.id} />
         <div className="container">
-          <Detail examid={this.props.match.params.id} />
+          <Breadcrumb links={links} />
+          <p>{this.state.detail.description}</p>
           <ItemList examid={this.props.match.params.id} />
         </div>
         <div class="fixed-action-btn">
