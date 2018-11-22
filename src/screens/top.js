@@ -30,7 +30,7 @@ export class Top extends Component {
       <div>
         <Navbar />
         <div className="container center-align">
-          <h1>さあ試験をはめよう</h1>
+          <h1>さあ試験をはじめよう</h1>
           <Link className="waves-effect waves-light btn-large" to="/exams">
             試験一覧
           </Link>
