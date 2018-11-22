@@ -99,6 +99,14 @@ export class QuestionList extends Component {
           <h2>問題一覧</h2>
           <ItemList examid={this.props.match.params.id} />
         </div>
+        <div class="fixed-action-btn">
+          <Link
+            to={"/exams/" + this.props.match.params.id + "/new"}
+            class="btn-floating btn-large waves-effect waves-light"
+          >
+            <i class="large material-icons">add</i>
+          </Link>
+        </div>
       </div>
     );
   }
