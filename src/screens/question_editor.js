@@ -44,7 +44,8 @@ export class QuestionEditor extends Component {
     this.state = {
       latex: "ax^{2}+bx+c=0",
       smatex: "ax^{2}+bx+c=0",
-      answer: "[-b+-#{b^{2}-4ac}]%[2a]",
+      ans_latex: "\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}",
+      ans_smatex: "[-b+-#{b^{2}-4ac}]%[2a]",
       examid: 0,
       question_type: "Math",
       is_loading: true
@@ -60,7 +61,8 @@ export class QuestionEditor extends Component {
   }
 
   updateAnswer(answer) {
-    this.setState({ answer: answer });
+    this.setState({ ans_smatex: answer });
+    this.setState({ ans_latex: parse(answer) });
   }
 
   getQuestion = async () => {
@@ -72,7 +74,8 @@ export class QuestionEditor extends Component {
     this.setState({
       smatex: question.smatex,
       latex: question.latex,
-      answer: question.answer,
+      ans_smatex: question.ans_smatex,
+      ans_latex: question.ans_latex,
       examid: question.exam_id,
       question_type: question.question_type,
       is_loading: false
@@ -85,7 +88,8 @@ export class QuestionEditor extends Component {
     const data = {
       smatex: this.state.smatex,
       latex: this.state.latex,
-      answer: this.state.answer,
+      ans_smatex: this.state.ans_smatex,
+      ans_latex: this.state.ans_latex,
       question_type: this.state.question_type
     };
     const question = await fetch(URI + "/questions/" + qid, {
@@ -104,7 +108,7 @@ export class QuestionEditor extends Component {
       <MathBox init={this.state.smatex} updateState={this.updateText} />
     );
     const answerInput = (
-      <MathBox init={this.state.answer} updateState={this.updateAnswer} />
+      <MathBox init={this.state.ans_smatex} updateState={this.updateAnswer} />
     );
     const preloader = (
       <div className="progress">
