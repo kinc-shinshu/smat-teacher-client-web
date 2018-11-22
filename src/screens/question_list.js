@@ -105,7 +105,7 @@ export class QuestionList extends Component {
     const detail = await fetch(URI + "/exams/" + examid).then(response =>
       response.json()
     );
-    this.setState({ detail: detail });
+    this.setState({ detail });
   };
 
   render() {
