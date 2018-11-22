@@ -123,12 +123,12 @@ export class QuestionList extends Component {
           <p>{this.state.detail.description}</p>
           <ItemList examid={this.props.match.params.id} />
         </div>
-        <div class="fixed-action-btn">
+        <div className="fixed-action-btn">
           <Link
             to={"/exams/" + this.props.match.params.id + "/new"}
-            class="btn-floating btn-large waves-effect waves-light"
+            className="btn-floating btn-large waves-effect waves-light"
           >
-            <i class="large material-icons">add</i>
+            <i className="large material-icons">add</i>
           </Link>
         </div>
       </div>

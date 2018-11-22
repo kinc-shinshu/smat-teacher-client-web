@@ -93,12 +93,12 @@ export class ExamList extends Component {
           <Breadcrumb links={links} />
           <ItemList tid={1} />
         </div>
-        <div class="fixed-action-btn">
+        <div className="fixed-action-btn">
           <Link
             to="/exams/new"
-            class="btn-floating btn-large waves-effect waves-light"
+            className="btn-floating btn-large waves-effect waves-light"
           >
-            <i class="large material-icons">add</i>
+            <i className="large material-icons">add</i>
           </Link>
         </div>
       </div>
