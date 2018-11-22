@@ -44,7 +44,8 @@ export class QuestionCreator extends Component {
     this.state = {
       smatex: "ax^{2}+bx+c=0",
       latex: "ax^{2}+bx+c=0",
-      answer: "[-b+-#{b^{2}-4ac}]%[2a]",
+      ans_smatex: "[-b+-#{b^{2}-4ac}]%[2a]",
+      ans_latex: "\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}",
       examid: this.props.match.params.id,
       question_type: "Math",
       is_loading: true
@@ -60,6 +61,7 @@ export class QuestionCreator extends Component {
 
   updateAnswer(answer) {
     this.setState({ answer: answer });
+    this.setState({ latex: parse(answer) });
   }
 
   createQuestion = async () => {
@@ -68,7 +70,8 @@ export class QuestionCreator extends Component {
     const data = {
       smatex: this.state.smatex,
       latex: this.state.latex,
-      answer: this.state.answer,
+      ans_smatex: this.state.ans_smatex,
+      ans_latex: this.state.ans_latex,
       examid: this.state.examid,
       question_type: this.state.question_type
     };
@@ -88,7 +91,7 @@ export class QuestionCreator extends Component {
       <MathBox init={this.state.smatex} updateState={this.updateText} />
     );
     const answerInput = (
-      <MathBox init={this.state.answer} updateState={this.updateAnswer} />
+      <MathBox init={this.state.ans_smatex} updateState={this.updateAnswer} />
     );
     return (
       <div>
