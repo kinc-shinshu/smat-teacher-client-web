@@ -43,6 +43,34 @@ class Navbar extends Component {
   }
 }
 
+class Detail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      detail: []
+    };
+    this.getDetail();
+  }
+
+  getDetail = async () => {
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const examid = this.props.examid;
+    const detail = await fetch(URI + "/exams/" + examid).then(response =>
+      response.json()
+    );
+    this.setState({ detail: detail });
+  };
+
+  render() {
+    return (
+      <div>
+        <h2>{this.state.detail.title}</h2>
+        <p>{this.state.detail.description}</p>
+      </div>
+    );
+  }
+}
+
 class ItemList extends Component {
   constructor(props) {
     super(props);
@@ -96,7 +124,7 @@ export class QuestionList extends Component {
       <div>
         <Navbar examid={this.props.match.params.id} />
         <div className="container">
-          <h2>問題一覧</h2>
+          <Detail examid={this.props.match.params.id} />
           <ItemList examid={this.props.match.params.id} />
         </div>
         <div class="fixed-action-btn">
