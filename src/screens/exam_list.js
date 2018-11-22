@@ -88,6 +88,14 @@ export class ExamList extends Component {
           <h2>試験一覧</h2>
           <ItemList tid={1} />
         </div>
+        <div class="fixed-action-btn">
+          <Link
+            to="/exams/new"
+            class="btn-floating btn-large waves-effect waves-light"
+          >
+            <i class="large material-icons">add</i>
+          </Link>
+        </div>
       </div>
     );
   }
