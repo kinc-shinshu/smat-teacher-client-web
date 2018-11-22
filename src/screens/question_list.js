@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { parse } from "../helper";
+import { parse, Breadcrumb } from "../helper";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import MathJax from "react-mathjax";
@@ -91,13 +91,45 @@ class ItemList extends Component {
 }
 
 export class QuestionList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      detail: []
+    };
+    this.getDetail();
+  }
+
+  getDetail = async () => {
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const examid = this.props.match.params.id;
+    const detail = await fetch(URI + "/exams/" + examid).then(response =>
+      response.json()
+    );
+    this.setState({ detail });
+  };
+
   render() {
+    const examid = this.props.match.params.id;
+    const links = [
+      { path: "/", text: "トップ" },
+      { path: "/exams", text: "試験一覧" },
+      { path: "/exams/" + examid, text: this.state.detail.title }
+    ];
     return (
       <div>
         <Navbar examid={this.props.match.params.id} />
         <div className="container">
-          <h2>問題一覧</h2>
+          <Breadcrumb links={links} />
+          <p>{this.state.detail.description}</p>
           <ItemList examid={this.props.match.params.id} />
+        </div>
+        <div className="fixed-action-btn">
+          <Link
+            to={"/exams/" + this.props.match.params.id + "/new"}
+            className="btn-floating btn-large waves-effect waves-light"
+          >
+            <i className="large material-icons">add</i>
+          </Link>
         </div>
       </div>
     );

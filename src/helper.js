@@ -1,7 +1,9 @@
 import React, { Component, createRef } from "react";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
+import "./breadcrumb.css";
 import MathJax from "react-mathjax";
+import { Link } from "react-router-dom";
 
 export function parse(text) {
   let result = text.replace(/\*/g, "\\times");
@@ -27,6 +29,37 @@ export function parse(text) {
   }
   result = result.replace(/@|#|\$|%|&/, "");
   return result;
+}
+
+export class Breadcrumb extends Component {
+  render() {
+    const isActive = this.props.links.slice(-1)[0];
+    const links = this.props.links.slice(0, -1);
+    const items = links.map((link, i) => {
+      return (
+        <li>
+          <Link className="teal-text" to={link.path}>
+            {link.text}
+          </Link>
+        </li>
+      );
+    });
+    return (
+      <div
+        className="breadcrumb is-large has-succeeds-separator"
+        aria-label="breadcrumbs"
+      >
+        <ul>
+          {items}
+          <li className="is-active">
+            <Link to={isActive.path} aria-current="page">
+              {isActive.text}
+            </Link>
+          </li>
+        </ul>
+      </div>
+    );
+  }
 }
 
 export class MathBox extends Component {
