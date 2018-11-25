@@ -26,7 +26,7 @@ class Navbar extends Component {
       }
     }).then(response => response.json());
     console.log(question);
-    window.location.reload();
+    this.props.reloadList();
   };
   // Fileを読み込んでPOSTする関数
   inputFile = e => {
@@ -129,11 +129,15 @@ export class QuestionList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detail: []
+      detail: [],
+      forReload: true
     };
     this.getDetail();
+    this.handler = this.handler.bind(this);
   }
-
+  handler() {
+    this.refs.functions.getQuestions();
+  }
   getDetail = async () => {
     const URI = "https://smat-api-dev.herokuapp.com/v1";
     const examid = this.props.match.params.id;
@@ -152,11 +156,11 @@ export class QuestionList extends Component {
     ];
     return (
       <div>
-        <Navbar examid={this.props.match.params.id} />
+        <Navbar examid={this.props.match.params.id} reloadList={this.handler} />
         <div className="container">
           <Breadcrumb links={links} />
           <p>{this.state.detail.description}</p>
-          <ItemList examid={this.props.match.params.id} />
+          <ItemList examid={this.props.match.params.id} ref="functions" />
         </div>
         <div className="fixed-action-btn">
           <Link
