@@ -130,10 +130,9 @@ export class QuestionList extends Component {
     super(props);
     this.state = {
       detail: [],
-      forReload: true
     };
     this.getDetail();
-    this.handler = this.handler.bind(this);
+    this.getChildQuestions = this.getChildQuestions.bind(this);
   }
   getChildQuestions() {
     this.refs.functions.getQuestions();
