@@ -156,7 +156,10 @@ export class QuestionList extends Component {
     ];
     return (
       <div>
-        <Navbar examid={this.props.match.params.id} reloadlist={this.getChildQuestions} />
+        <Navbar
+          examid={this.props.match.params.id}
+          reloadlist={this.getChildQuestions}
+        />
         <div className="container">
           <Breadcrumb links={links} />
           <p>{this.state.detail.description}</p>
