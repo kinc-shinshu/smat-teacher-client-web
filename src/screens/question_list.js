@@ -26,7 +26,7 @@ class Navbar extends Component {
       }
     }).then(response => response.json());
     console.log(question);
-    this.props.reloadList();
+    this.props.reloadlist();
   };
   // Fileを読み込んでPOSTする関数
   inputFile = e => {
@@ -135,7 +135,7 @@ export class QuestionList extends Component {
     this.getDetail();
     this.handler = this.handler.bind(this);
   }
-  handler() {
+  getChildQuestions() {
     this.refs.functions.getQuestions();
   }
   getDetail = async () => {
@@ -156,7 +156,7 @@ export class QuestionList extends Component {
     ];
     return (
       <div>
-        <Navbar examid={this.props.match.params.id} reloadList={this.handler} />
+        <Navbar examid={this.props.match.params.id} reloadlist={this.getChildQuestions} />
         <div className="container">
           <Breadcrumb links={links} />
           <p>{this.state.detail.description}</p>
