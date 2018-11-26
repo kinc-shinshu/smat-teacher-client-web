@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MathBox, parse } from "../helper";
+import { MathBox, parse, Breadcrumb } from "../helper";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
@@ -48,8 +48,10 @@ export class QuestionCreator extends Component {
       ans_latex: "\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}",
       examid: this.props.match.params.id,
       question_type: "Math",
-      is_loading: true
+      is_loading: true,
+      detail: []
     };
+    this.getDetail();
     this.updateText = this.updateText.bind(this);
     this.updateAnswer = this.updateAnswer.bind(this);
   }
@@ -86,6 +88,15 @@ export class QuestionCreator extends Component {
     this.props.history.push("/exams/" + this.state.examid);
   };
 
+  getDetail = async () => {
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const examid = this.props.match.params.id;
+    const detail = await fetch(URI + "/exams/" + examid).then(response =>
+      response.json()
+    );
+    this.setState({ detail });
+  };
+
   render() {
     const questionInput = (
       <MathBox init={this.state.smatex} updateState={this.updateText} />
@@ -93,10 +104,18 @@ export class QuestionCreator extends Component {
     const answerInput = (
       <MathBox init={this.state.ans_smatex} updateState={this.updateAnswer} />
     );
+    const examid = this.props.match.params.id;
+    const links = [
+      { path: "/", text: "トップ" },
+      { path: "/exams", text: "試験一覧" },
+      { path: "/exams/" + examid, text: this.state.detail.title },
+      { path: "/exams/" + examid + "/new", text: "新規作成" }
+    ];
     return (
       <div>
         <Navbar examid={this.props.match.params.id} />
         <div className="container">
+          <Breadcrumb links={links} />
           <div className="card-panel grey lighten-4">
             <h4>問題</h4>
             {questionInput}
