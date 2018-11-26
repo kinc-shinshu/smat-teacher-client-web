@@ -200,6 +200,10 @@ export class QuestionList extends Component {
         text: this.state.detail.title
       }
     ];
+    let description = this.state.detail.description;
+    if (description === "") {
+      description = <span className="grey-text">クリックで説明を追加</span>;
+    }
     return (
       <div>
         <Navbar
@@ -219,7 +223,7 @@ export class QuestionList extends Component {
               this.updateDetail(detail);
             }}
           >
-            {this.state.detail.description}
+            {description}
           </p>
           <ItemList examid={this.props.match.params.id} ref="functions" />
         </div>
