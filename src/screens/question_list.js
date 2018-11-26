@@ -6,6 +6,41 @@ import MathJax from "react-mathjax";
 import { Link } from "react-router-dom";
 
 class Navbar extends Component {
+  // 問題をPOSTする関数
+  postQuestion = async e => {
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const examid = this.props.examid;
+    const data = {
+      smatex: e.smatex,
+      latex: e.latex,
+      ans_smatex: e.ans_smatex,
+      ans_latex: e.ans_latex,
+      examid: e.examid,
+      question_type: e.question_type
+    };
+    const question = await fetch(URI + "/exams/" + examid + "/questions", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => response.json());
+    console.log(question);
+    this.props.reloadlist();
+  };
+  // Fileを読み込んでPOSTする関数
+  inputFile = e => {
+    const fileReader = new FileReader();
+    const file = e.target.files[0];
+    fileReader.readAsText(file);
+    fileReader.onloadend = event => {
+      const json = JSON.parse(event.target.result);
+      json.map((q, i) => {
+        return this.postQuestion(q);
+      });
+    };
+  };
+
   render() {
     return (
       <div className="navbar-fixed">
@@ -30,7 +65,7 @@ class Navbar extends Component {
                     <input
                       type="file"
                       style={{ display: "None" }}
-                      onChange={this.change}
+                      onChange={this.inputFile}
                     />
                   </a>
                 </label>
@@ -94,11 +129,14 @@ export class QuestionList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detail: []
+      detail: [],
     };
     this.getDetail();
+    this.getChildQuestions = this.getChildQuestions.bind(this);
   }
-
+  getChildQuestions() {
+    this.refs.functions.getQuestions();
+  }
   getDetail = async () => {
     const URI = "https://smat-api-dev.herokuapp.com/v1";
     const examid = this.props.match.params.id;
@@ -117,11 +155,14 @@ export class QuestionList extends Component {
     ];
     return (
       <div>
-        <Navbar examid={this.props.match.params.id} />
+        <Navbar
+          examid={this.props.match.params.id}
+          reloadlist={this.getChildQuestions}
+        />
         <div className="container">
           <Breadcrumb links={links} />
           <p>{this.state.detail.description}</p>
-          <ItemList examid={this.props.match.params.id} />
+          <ItemList examid={this.props.match.params.id} ref="functions" />
         </div>
         <div className="fixed-action-btn">
           <Link
