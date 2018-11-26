@@ -192,6 +192,7 @@ export class QuestionList extends Component {
       {
         action: () => {
           const title = window.prompt("タイトル", this.state.detail.title);
+          if (title === null) return;
           const detail = { ...this.state.detail, title };
           this.updateDetail(detail);
         },
@@ -213,6 +214,7 @@ export class QuestionList extends Component {
                 "説明",
                 this.state.detail.description
               );
+              if (description === null) return;
               const detail = { ...this.state.detail, description };
               this.updateDetail(detail);
             }}
