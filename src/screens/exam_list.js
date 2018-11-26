@@ -58,12 +58,29 @@ class ItemList extends Component {
     );
     this.setState({ exams: exams, is_loading: false });
   };
+  deleteClick = async e => {
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const key = e.target.getAttribute("roomId");
+    await fetch(URI + "/exams/" + key, {
+      method: "DELETE"
+    });
+    this.getExams();
+  };
 
   render() {
     const items = this.state.exams.map((e, i) => {
       return (
         <Link to={"/exams/" + e.id} key={i} className="collection-item">
           {e.title}
+          <Link to={"/exams/"} className="secondary-content ">
+            <i
+              className="material-icons"
+              roomid={e.id}
+              onClick={this.deleteClick}
+            >
+              delete
+            </i>
+          </Link>
         </Link>
       );
     });
