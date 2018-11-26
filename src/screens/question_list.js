@@ -109,8 +109,8 @@ class ItemList extends Component {
   render() {
     const items = this.state.questions.map((q, i) => {
       return (
-        <a
-          href={"/questions/" + q.id + "/edit"}
+        <Link
+          to={"/questions/" + q.id + "/edit"}
           key={i}
           className="collection-item"
           style={{ minHeight: "5em" }}
@@ -130,7 +130,7 @@ class ItemList extends Component {
               delete
             </i>
           </Link>
-        </a>
+        </Link>
       );
     });
     const preloader = (
