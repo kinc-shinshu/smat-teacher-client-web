@@ -72,7 +72,7 @@ class ItemList extends Component {
       return (
         <Link to={"/exams/" + e.id} key={i} className="collection-item">
           {e.title}
-          <Link to={"/exams/"} href="#delete" className="secondary-content ">
+          <Link to={"/exams/"} className="secondary-content ">
             <i
               className="material-icons"
               roomid={e.id}

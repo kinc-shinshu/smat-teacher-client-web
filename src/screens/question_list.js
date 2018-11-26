@@ -118,7 +118,10 @@ class ItemList extends Component {
           <MathJax.Provider>
             <MathJax.Node formula={parse(q.smatex)} className="left" />
           </MathJax.Provider>
-          <Link to={"/exams/" + this.props.examid} className="secondary-content ">
+          <Link
+            to={"/exams/" + this.props.examid}
+            className="secondary-content "
+          >
             <i
               className="material-icons"
               questionid={q.id}
