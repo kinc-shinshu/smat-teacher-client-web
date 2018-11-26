@@ -134,7 +134,7 @@ export class QuestionEditor extends Component {
       { path: "/", text: "トップ" },
       { path: "/exams", text: "試験一覧" },
       { path: "/exams/" + examid, text: this.state.detail.title },
-      { path: "/exams/" + examid + "/new", text: "新規作成" }
+      { path: "__FEATURE__", text: "編集" }
     ];
     return (
       <div>
