@@ -150,7 +150,8 @@ export class QuestionList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detail: []
+      detail: [],
+      open: false
     };
     this.getDetail();
     this.getChildQuestions = this.getChildQuestions.bind(this);
@@ -164,7 +165,32 @@ export class QuestionList extends Component {
     const detail = await fetch(URI + "/exams/" + examid).then(response =>
       response.json()
     );
+    console.log(detail);
+    if (detail.room_id === -1) {
+      this.setState({ open: false });
+    } else {
+      this.setState({ open: true });
+    }
     this.setState({ detail });
+  };
+  changeRoomStatus = async () => {
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const examid = this.props.match.params.id;
+    if (this.state.open) {
+      await fetch(URI + "/exams/" + examid + "/close", {
+        method: "POST"
+      }).then(response => console.log(response));
+      this.setState({ open: false });
+    } else {
+      await fetch(URI + "/exams/" + examid + "/open", {
+        method: "POST"
+      }).then(response => console.log(response));
+      this.setState({ open: true });
+      const detail = await fetch(URI + "/exams/" + examid).then(response =>
+        response.json()
+      );
+      this.setState({ detail });
+    }
   };
 
   render() {
@@ -174,6 +200,15 @@ export class QuestionList extends Component {
       { path: "/exams", text: "試験一覧" },
       { path: "/exams/" + examid, text: this.state.detail.title }
     ];
+    let roomId = (
+      <h5 className="center-align">
+        部屋番号:
+        {this.state.detail.room_id}
+      </h5>
+    );
+    if (this.state.open === false) {
+      roomId = "";
+    }
     return (
       <div>
         <Navbar
@@ -183,6 +218,19 @@ export class QuestionList extends Component {
         <div className="container">
           <Breadcrumb links={links} />
           <p>{this.state.detail.description}</p>
+          {roomId}
+          <div className="switch right-align">
+            <label>
+              非公開
+              <input
+                type="checkbox"
+                checked={this.state.open}
+                onChange={this.changeRoomStatus}
+              />
+              <span className="lever" />
+              公開
+            </label>
+          </div>
           <ItemList examid={this.props.match.params.id} ref="functions" />
         </div>
         <div className="fixed-action-btn">
