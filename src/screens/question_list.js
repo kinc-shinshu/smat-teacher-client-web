@@ -155,9 +155,11 @@ export class QuestionList extends Component {
     this.getDetail();
     this.getChildQuestions = this.getChildQuestions.bind(this);
   }
+
   getChildQuestions() {
     this.refs.functions.getQuestions();
   }
+
   getDetail = async () => {
     const URI = "https://smat-api-dev.herokuapp.com/v1";
     const examid = this.props.match.params.id;
@@ -167,12 +169,35 @@ export class QuestionList extends Component {
     this.setState({ detail });
   };
 
+  updateDetail = async detail => {
+    const data = { ...detail };
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const examid = this.props.match.params.id;
+    const response = await fetch(URI + "/exams/" + examid, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => response.json());
+    console.log(response);
+    this.setState({ detail });
+  };
+
   render() {
     const examid = this.props.match.params.id;
     const links = [
       { path: "/", text: "トップ" },
       { path: "/exams", text: "試験一覧" },
-      { path: "/exams/" + examid, text: this.state.detail.title }
+      {
+        action: () => {
+          const title = window.prompt("タイトル", this.state.detail.title);
+          const detail = { ...this.state.detail, title };
+          this.updateDetail(detail);
+        },
+        path: "/exams/" + examid,
+        text: this.state.detail.title
+      }
     ];
     return (
       <div>
@@ -182,7 +207,18 @@ export class QuestionList extends Component {
         />
         <div className="container">
           <Breadcrumb links={links} />
-          <p>{this.state.detail.description}</p>
+          <p
+            onClick={() => {
+              const description = window.prompt(
+                "説明",
+                this.state.detail.description
+              );
+              const detail = { ...this.state.detail, description };
+              this.updateDetail(detail);
+            }}
+          >
+            {this.state.detail.description}
+          </p>
           <ItemList examid={this.props.match.params.id} ref="functions" />
         </div>
         <div className="fixed-action-btn">

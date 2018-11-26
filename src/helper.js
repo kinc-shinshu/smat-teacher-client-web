@@ -51,7 +51,7 @@ export class Breadcrumb extends Component {
       >
         <ul>
           {items}
-          <li className="is-active">
+          <li className="is-active" onClick={isActive.action}>
             <Link to={isActive.path} aria-current="page">
               {isActive.text}
             </Link>
