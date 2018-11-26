@@ -97,11 +97,20 @@ class ItemList extends Component {
     this.setState({ questions: questions, is_loading: false });
   };
 
+  deleteClick = async e => {
+    const key = e.target.getAttribute("questionId");
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    await fetch(URI + "/questions/" + key, {
+      method: "DELETE"
+    });
+    this.getQuestions();
+  };
+
   render() {
     const items = this.state.questions.map((q, i) => {
       return (
-        <Link
-          to={"/questions/" + q.id + "/edit"}
+        <a
+          href={"/questions/" + q.id + "/edit"}
           key={i}
           className="collection-item"
           style={{ minHeight: "5em" }}
@@ -109,7 +118,16 @@ class ItemList extends Component {
           <MathJax.Provider>
             <MathJax.Node formula={parse(q.smatex)} className="left" />
           </MathJax.Provider>
-        </Link>
+          <a href="#delete" className="secondary-content ">
+            <i
+              className="material-icons"
+              questionid={q.id}
+              onClick={this.deleteClick}
+            >
+              delete
+            </i>
+          </a>
+        </a>
       );
     });
     const preloader = (
@@ -129,7 +147,7 @@ export class QuestionList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detail: [],
+      detail: []
     };
     this.getDetail();
     this.getChildQuestions = this.getChildQuestions.bind(this);
