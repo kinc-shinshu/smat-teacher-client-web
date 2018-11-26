@@ -70,9 +70,9 @@ class ItemList extends Component {
   render() {
     const items = this.state.exams.map((e, i) => {
       return (
-        <a href={"/exams/" + e.id} key={i} className="collection-item">
+        <Link to={"/exams/" + e.id} key={i} className="collection-item">
           {e.title}
-          <a href="#delete" className="secondary-content ">
+          <Link to={"/exams/"} href="#delete" className="secondary-content ">
             <i
               className="material-icons"
               roomid={e.id}
@@ -80,8 +80,8 @@ class ItemList extends Component {
             >
               delete
             </i>
-          </a>
-        </a>
+          </Link>
+        </Link>
       );
     });
     const preloader = (

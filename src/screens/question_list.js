@@ -118,7 +118,7 @@ class ItemList extends Component {
           <MathJax.Provider>
             <MathJax.Node formula={parse(q.smatex)} className="left" />
           </MathJax.Provider>
-          <a href="#delete" className="secondary-content ">
+          <Link to={"/exams/" + this.props.examid} className="secondary-content ">
             <i
               className="material-icons"
               questionid={q.id}
@@ -126,7 +126,7 @@ class ItemList extends Component {
             >
               delete
             </i>
-          </a>
+          </Link>
         </a>
       );
     });
