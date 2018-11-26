@@ -3,6 +3,7 @@ import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import { Breadcrumb } from "../helper";
 
 class Navbar extends Component {
   render() {
@@ -84,11 +85,16 @@ export class ExamCreator extends Component {
   };
 
   render() {
+    const links = [
+      { path: "/", text: "トップ" },
+      { path: "/exams", text: "試験一覧" },
+      { path: "/exams/new", text: "新規作成" }
+    ];
     return (
       <div>
         <Navbar />
         <div className="container">
-          <h1>新規試験作成</h1>
+          <Breadcrumb links={links} />
           <div className="row">
             <div className="input-field col s12">
               <input
