@@ -69,9 +69,21 @@ class ItemList extends Component {
 
   render() {
     const items = this.state.exams.map((e, i) => {
+      let roomStatus = "";
+      if (e.status === 1) {
+        roomStatus = (
+          <span
+            className="chip teal lighten-2 white-text"
+            style={{ marginLeft: "2em", fontWeight: "bold" }}
+          >
+            公開中
+          </span>
+        );
+      }
       return (
         <Link to={"/exams/" + e.id} key={i} className="collection-item">
           {e.title}
+          {roomStatus}
           <Link to={"/exams/"} className="secondary-content ">
             <i
               className="material-icons"
