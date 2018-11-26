@@ -234,10 +234,10 @@ export class QuestionList extends Component {
     );
     if (this.state.open === false) {
       roomId = "";
+    }
     let description = this.state.detail.description;
     if (description === "") {
       description = <span className="grey-text">クリックで説明を追加</span>;
-
     }
     return (
       <div>
