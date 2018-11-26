@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MathBox, parse } from "../helper";
+import { MathBox, parse, Breadcrumb } from "../helper";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
@@ -48,7 +48,8 @@ export class QuestionEditor extends Component {
       ans_smatex: "[-b+-#{b^{2}-4ac}]%[2a]",
       examid: 0,
       question_type: "Math",
-      is_loading: true
+      is_loading: true,
+      detail: []
     };
     this.getQuestion();
     this.updateText = this.updateText.bind(this);
@@ -71,7 +72,7 @@ export class QuestionEditor extends Component {
     const question = await fetch(URI + "/questions/" + qid).then(response =>
       response.json()
     );
-    this.setState({
+    await this.setState({
       smatex: question.smatex,
       latex: question.latex,
       ans_smatex: question.ans_smatex,
@@ -80,6 +81,7 @@ export class QuestionEditor extends Component {
       question_type: question.question_type,
       is_loading: false
     });
+    this.getDetail();
   };
 
   updateQuestion = async () => {
@@ -103,6 +105,15 @@ export class QuestionEditor extends Component {
     this.props.history.push("/exams/" + this.state.examid);
   };
 
+  getDetail = async () => {
+    const URI = "https://smat-api-dev.herokuapp.com/v1";
+    const examid = this.state.examid;
+    const detail = await fetch(URI + "/exams/" + examid).then(response =>
+      response.json()
+    );
+    this.setState({ detail });
+  };
+
   render() {
     const questionInput = (
       <MathBox init={this.state.smatex} updateState={this.updateText} />
@@ -118,10 +129,18 @@ export class QuestionEditor extends Component {
     if (this.state.is_loading) {
       return preloader;
     }
+    const examid = this.state.examid;
+    const links = [
+      { path: "/", text: "トップ" },
+      { path: "/exams", text: "試験一覧" },
+      { path: "/exams/" + examid, text: this.state.detail.title },
+      { path: "/exams/" + examid + "/new", text: "新規作成" }
+    ];
     return (
       <div>
         <Navbar examid={this.state.examid} />
         <div className="container">
+          <Breadcrumb links={links} />
           <div className="card-panel grey lighten-4">
             <h4>問題</h4>
             {questionInput}
