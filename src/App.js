@@ -6,6 +6,7 @@ import { ExamCreator } from "./screens/exam_creator";
 import { QuestionList } from "./screens/question_list";
 import { QuestionCreator } from "./screens/question_creator";
 import { QuestionEditor } from "./screens/question_editor";
+import { ExamResult } from "./screens/exam_result";
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <Route exact path="/exams/new" component={ExamCreator} />
           <Route exact path="/exams/:id(\d+)" component={QuestionList} />
           <Route exact path="/exams/:id/new" component={QuestionCreator} />
+          <Route exact path="/exams/:id/results" component={ExamResult} />
           <Route
             exact
             path="/questions/:id(\d+)/edit"
