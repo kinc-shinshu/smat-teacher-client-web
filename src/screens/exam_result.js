@@ -4,17 +4,7 @@ import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import {
-  BarChart,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  Bar,
-  PieChart,
-  Pie
-} from "recharts";
+import { Bar, Pie } from "react-chartjs-2";
 
 class Navbar extends Component {
   render() {
@@ -122,12 +112,59 @@ export class ExamResult extends Component {
       { path: "/exams/" + examid, text: this.state.detail.title },
       { path: "/exams/" + examid + "/results", text: "結果" }
     ];
+
+    const data = {
+      labels: [1, 2, 3, 4, 5, 6, 7],
+      datasets: [
+        {
+          label: "My First dataset",
+          backgroundColor: "#26a69a",
+          data: [65, 59, 80, 81, 56, 55, 40]
+        }
+      ]
+    };
+
+    const pieData = {
+      labels: ["Red", "Green", "Yellow"],
+      datasets: [
+        {
+          data: [300, 50, 100],
+          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+          hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+        }
+      ]
+    };
+
     return (
       <div>
         <Navbar examid={this.props.match.params.id} />
         <div className="container">
           <Breadcrumb links={links} />
           <h1>結果</h1>
+          <div className="row">
+            <div className="col s3">
+              <Pie data={pieData} height={300} />
+            </div>
+            <div className="col s9">
+              <Bar
+                data={data}
+                width={100}
+                height={300}
+                options={{
+                  maintainAspectRatio: false,
+                  scales: {
+                    yAxes: [
+                      {
+                        ticks: {
+                          beginAtZero: true
+                        }
+                      }
+                    ]
+                  }
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );
