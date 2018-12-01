@@ -4,7 +4,7 @@ import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import { Bar, Pie } from "react-chartjs-2";
+import { Bar, Pie, Line } from "react-chartjs-2";
 
 class Navbar extends Component {
   render() {
@@ -119,7 +119,131 @@ export class ExamResult extends Component {
         {
           label: "My First dataset",
           backgroundColor: "#26a69a",
-          data: [65, 59, 80, 81, 56, 55, 40]
+          data: [0.1, 0.2, 0.3, 0.5, 0.8, 0.4, 0.7]
+        }
+      ]
+    };
+
+    const dataForContest = {
+      labels: [
+        "(1)",
+        "(2)",
+        "(3)",
+        "(4)",
+        "(5)",
+        "(6)",
+        "(7)",
+        "(8)",
+        "(9)",
+        "(10)",
+        "(11)",
+        "(12)",
+        "(13)",
+        "(14)",
+        "(15)"
+      ],
+      datasets: [
+        {
+          label: "正解率",
+          backgroundColor: "#26a69a",
+          data: [
+            0.44722263,
+            0.74711034,
+            0.82173555,
+            0.77008046,
+            0.72391986,
+            0.47375261,
+            0.93916767,
+            0.59019516,
+            0.85392795,
+            0.76520539,
+            0.66937194,
+            0.52311575,
+            0.86767557,
+            0.92118334,
+            0.8665264
+          ]
+        }
+      ]
+    };
+
+    const dataForContestSmall1 = {
+      labels: [1, 2, 3, 4, 5],
+      datasets: [
+        {
+          label: "正解率",
+          fill: false,
+          lineTension: 0.1,
+          backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          borderCapStyle: "butt",
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: "miter",
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(75,192,192,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: [0.44722263, 0.59019516, 0.74711034, 0.77008046, 0.82173555]
+        }
+      ]
+    };
+
+    const dataForContestSmall2 = {
+      labels: [1, 2, 3, 4],
+      datasets: [
+        {
+          label: "正解率",
+          fill: false,
+          lineTension: 0.1,
+          backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          borderCapStyle: "butt",
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: "miter",
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(75,192,192,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: [0.5722263, 0.79019516, 0.83711034, 0.83008046]
+        }
+      ]
+    };
+
+    const dataForContestSmall3 = {
+      labels: [1, 2, 3, 4, 5],
+      datasets: [
+        {
+          label: "正解率",
+          fill: false,
+          lineTension: 0.1,
+          backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          borderCapStyle: "butt",
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: "miter",
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(75,192,192,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: [0.14722263, 0.19019516, 0.34711034, 0.47008046, 0.52173555]
         }
       ]
     };
@@ -135,19 +259,30 @@ export class ExamResult extends Component {
       ]
     };
 
+    const pieDataForContest = {
+      labels: ["正解", "不正解"],
+      datasets: [
+        {
+          data: [0.7370019446910346, 1 - 0.7370019446910346],
+          backgroundColor: ["#36A2EB", "#FF6384"],
+          hoverBackgroundColor: ["#36A2EB", "#FF6384"]
+        }
+      ]
+    };
+
     return (
       <div>
         <Navbar examid={this.props.match.params.id} />
         <div className="container">
           <Breadcrumb links={links} />
-          <h1>結果</h1>
+          <h3 className="center-align">全体結果</h3>
           <div className="row">
             <div className="col s3">
-              <Pie data={pieData} height={300} />
+              <Pie data={pieDataForContest} height={300} />
             </div>
             <div className="col s9">
               <Bar
-                data={data}
+                data={dataForContest}
                 width={100}
                 height={300}
                 options={{
@@ -156,10 +291,59 @@ export class ExamResult extends Component {
                     yAxes: [
                       {
                         ticks: {
+                          max: 1,
                           beginAtZero: true
                         }
                       }
                     ]
+                  }
+                }}
+              />
+            </div>
+          </div>
+          <h3 className="center-align">各問題の結果</h3>
+          <div className="row">
+            <div className="col s4">
+              <Line
+                data={dataForContestSmall1}
+                options={{
+                  title: {
+                    display: true,
+                    text: "問題１"
+                  },
+                  legend: {
+                    display: true,
+                    position: "bottom"
+                  }
+                }}
+              />
+            </div>
+            <div className="col s4">
+              <Line
+                data={dataForContestSmall2}
+                options={{
+                  title: {
+                    display: true,
+                    text: "問題2"
+                  },
+                  legend: {
+                    display: true,
+                    position: "bottom"
+                  }
+                }}
+              />
+            </div>
+            <div className="col s4">
+              <Line
+                data={dataForContestSmall3}
+                options={{
+                  title: {
+                    display: true,
+                    text: "問題3"
+                  },
+                  legend: {
+                    display: true,
+                    position: "bottom"
                   }
                 }}
               />
