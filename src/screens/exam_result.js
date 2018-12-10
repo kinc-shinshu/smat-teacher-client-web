@@ -126,21 +126,10 @@ export class ExamResult extends Component {
 
     const dataForContest = {
       labels: [
-        "(1)",
-        "(2)",
-        "(3)",
-        "(4)",
-        "(5)",
-        "(6)",
-        "(7)",
-        "(8)",
-        "(9)",
-        "(10)",
-        "(11)",
-        "(12)",
-        "(13)",
-        "(14)",
-        "(15)"
+        "問題1",
+        "問題2",
+        "問題3",
+        "問題4"
       ],
       datasets: [
         {
@@ -150,7 +139,7 @@ export class ExamResult extends Component {
             0.44722263,
             0.74711034,
             0.82173555,
-            0.77008046,
+            0.37008046,
             0.72391986,
             0.47375261,
             0.93916767,
@@ -301,9 +290,9 @@ export class ExamResult extends Component {
               />
             </div>
           </div>
-          <h3 className="center-align">各問題の結果</h3>
+          <h3 className="center-align">挑戦回数</h3>
           <div className="row">
-            <div className="col s4">
+            <div className="col s6">
               <Line
                 data={dataForContestSmall1}
                 options={{
@@ -318,7 +307,7 @@ export class ExamResult extends Component {
                 }}
               />
             </div>
-            <div className="col s4">
+            <div className="col s6">
               <Line
                 data={dataForContestSmall2}
                 options={{
@@ -333,7 +322,24 @@ export class ExamResult extends Component {
                 }}
               />
             </div>
-            <div className="col s4">
+          </div>
+          <div className="row">
+            <div className="col s6">
+              <Line
+                data={dataForContestSmall1}
+                options={{
+                  title: {
+                    display: true,
+                    text: "問題4"
+                  },
+                  legend: {
+                    display: true,
+                    position: "bottom"
+                  }
+                }}
+              />
+            </div>
+            <div className="col s6">
               <Line
                 data={dataForContestSmall3}
                 options={{
