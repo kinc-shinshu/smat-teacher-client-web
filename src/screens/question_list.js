@@ -274,6 +274,14 @@ export class QuestionList extends Component {
             </label>
           </div>
           <ItemList examid={this.props.match.params.id} ref="functions" />
+          <div className="center-align">
+            <Link
+              to={"/exams/" + this.props.match.params.id + "/results"}
+              className="waves-effect waves-light btn-large"
+            >
+              結果
+            </Link>
+          </div>
         </div>
         <div className="fixed-action-btn">
           <Link
