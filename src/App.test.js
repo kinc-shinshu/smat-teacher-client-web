@@ -20,8 +20,8 @@ describe("view", () => {
     expect(wrapper.find("BrowserRouter").length).toBe(1);
   });
 
-  test("renders 6 Route components", () => {
+  test("renders 7 Route components", () => {
     const wrapper = shallow(<App />);
-    expect(wrapper.find("Route").length).toBe(6);
+    expect(wrapper.find("Route").length).toBe(7);
   });
 });
