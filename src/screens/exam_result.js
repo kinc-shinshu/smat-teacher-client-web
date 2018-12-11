@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MathBox, parse, Breadcrumb } from "../helper";
+import { parse, Breadcrumb } from "../helper";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Link } from "react-router-dom";
@@ -99,12 +99,6 @@ export class ExamResult extends Component {
   };
 
   render() {
-    const questionInput = (
-      <MathBox init={this.state.smatex} updateState={this.updateText} />
-    );
-    const answerInput = (
-      <MathBox init={this.state.ans_smatex} updateState={this.updateAnswer} />
-    );
     const examid = this.props.match.params.id;
     const links = [
       { path: "/", text: "トップ" },
@@ -113,24 +107,8 @@ export class ExamResult extends Component {
       { path: "/exams/" + examid + "/results", text: "結果" }
     ];
 
-    const data = {
-      labels: [1, 2, 3, 4, 5, 6, 7],
-      datasets: [
-        {
-          label: "My First dataset",
-          backgroundColor: "#26a69a",
-          data: [0.1, 0.2, 0.3, 0.5, 0.8, 0.4, 0.7]
-        }
-      ]
-    };
-
     const dataForContest = {
-      labels: [
-        "問題1",
-        "問題2",
-        "問題3",
-        "問題4"
-      ],
+      labels: ["問題1", "問題2", "問題3", "問題4"],
       datasets: [
         {
           label: "正解率",
@@ -233,17 +211,6 @@ export class ExamResult extends Component {
           pointRadius: 1,
           pointHitRadius: 10,
           data: [0.14722263, 0.19019516, 0.34711034, 0.47008046, 0.52173555]
-        }
-      ]
-    };
-
-    const pieData = {
-      labels: ["Red", "Green", "Yellow"],
-      datasets: [
-        {
-          data: [300, 50, 100],
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-          hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
         }
       ]
     };
