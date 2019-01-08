@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { parse, Breadcrumb } from "./helper";
+import { parse, Breadcrumb, MathBox } from "./helper";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -53,5 +53,14 @@ describe("breadcrumb", () => {
     ];
     const wrapper = shallow(<Breadcrumb links={links} />);
     expect(wrapper.find("li").length).toBe(4);
+  });
+});
+
+describe("mathbox", () => {
+  // テストの書き方わからん
+  test("renders buttons", () => {
+    const smatex = "[-b+-#{b^{2}-4ac}]%[2a]";
+    const wrapper = shallow(<MathBox init={smatex} />);
+    expect(wrapper.find("button").length).toBe(5);
   });
 });
