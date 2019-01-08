@@ -37,7 +37,7 @@ export class Breadcrumb extends Component {
     const links = this.props.links.slice(0, -1);
     const items = links.map((link, i) => {
       return (
-        <li>
+        <li key={i}>
           <Link className="teal-text" to={link.path}>
             {link.text}
           </Link>

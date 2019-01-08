@@ -36,3 +36,22 @@ describe("parser", () => {
     expect(result).toBe("\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}");
   });
 });
+
+describe("breadcrumb", () => {
+  test("renders 1 list item", () => {
+    const links = [{ path: "/", text: "トップ" }];
+    const wrapper = shallow(<Breadcrumb links={links} />);
+    expect(wrapper.find("li").length).toBe(1);
+  });
+
+  test("renders many list items", () => {
+    const links = [
+      { path: "/", text: "トップ" },
+      { path: "/exams", text: "試験一覧" },
+      { path: "/exams/1", text: "試験1" },
+      { path: "/exams/1/new", text: "新規作成" }
+    ];
+    const wrapper = shallow(<Breadcrumb links={links} />);
+    expect(wrapper.find("li").length).toBe(4);
+  });
+});
