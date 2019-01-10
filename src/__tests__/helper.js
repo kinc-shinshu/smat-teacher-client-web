@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { parse, Breadcrumb, MathBox } from "./helper";
+import { parse, Breadcrumb, MathBox } from "../helper";
 
 Enzyme.configure({ adapter: new Adapter() });
 
